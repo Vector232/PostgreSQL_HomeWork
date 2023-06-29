@@ -16,8 +16,8 @@ insert into albums (name, release_date) values('album_D', DATE '02-11-1967');
 
 insert into tracks (name, duration, albums_id) values('track_A', 160, 1);
 insert into tracks (name, duration, albums_id) values('track_B', 250, 2);
-insert into tracks (name, duration, albums_id) values('track_C', 200, 2);
-insert into tracks (name, duration, albums_id) values('track_D', 120, 3);
+insert into tracks (name, duration, albums_id) values('track C', 200, 2);
+insert into tracks (name, duration, albums_id) values('track D', 120, 3);
 insert into tracks (name, duration, albums_id) values('track_E', 325, 3);
 insert into tracks (name, duration, albums_id) values('track_F', 245, 3);
 insert into tracks (name, duration, albums_id) values('track_G', 120, 4);

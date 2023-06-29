@@ -1,11 +1,12 @@
 ---- Задание 2 
+
 -- 1.Название и продолжительность самого длительного трека.
 select name, duration from tracks
 	where duration = (select max(duration) from tracks);
 
 -- 2.Название треков, продолжительность которых не менее 3,5 минут.
 select name from tracks
-	where duration > (60*3.5);
+	where duration >= (60*3.5);
 
 -- 3.Названия сборников, вышедших в период с 2018 по 2020 год включительно.
 select name from compilations
@@ -17,10 +18,32 @@ select * from artists
 
 -- 5.Название треков, которые содержат слово *(«мой» или «my»)*. *Подстроил под свои данные: слово «C» или «D»
 select name from tracks
-	where name like '%C%' 
-		or name like '%D%';
+	where name like '% C %'
+		or name like 'C %'
+		or name like '% C'
+		or name like 'C'
+		or name like '% D %'
+		or name like 'D %'
+		or name like '% D'
+		or name like 'D'
+		or name like '% c %'
+		or name like 'c %'
+		or name like '% c'
+		or name like 'c'
+		or name like '% d %'
+		or name like 'd %'
+		or name like '% d'
+		or name like 'd';
+--или
+select name from tracks
+	where string_to_array(lower(name), ' ') && array['c', 'd'];
+--или
+select name from tracks
+	where name ~* '^C|C$| C |^C$|^D|D$| D |^D$';
+
 
 ----Задание 3
+
 -- 1.Количество исполнителей в каждом жанре.
 select g.name, count(artists_id) artists_count from genres_artists ga
 	left join genres g on ga.genres_id = g.id -- тут я понял, что лучше у genres(и везде) делать не id а genres_id
@@ -28,17 +51,9 @@ select g.name, count(artists_id) artists_count from genres_artists ga
 	order by count(artists_id) desc;
 
 -- 2.Количество треков, вошедших в альбомы 2019–2020 годов.
-select a.name, count(albums_id) track_count from tracks t
+select count(albums_id) track_count from tracks t
 	left join albums a on t.albums_id = a.id
-	group by a.name, a.release_date
-	having a.release_date between date '01-01-2019' and date '31-12-2020'
-	order by count(albums_id) desc;
--- или
-select a.name, count(albums_id) track_count from tracks t
-	left join albums a on t.albums_id = a.id
-	where a.release_date between date '01-01-2019' and date '31-12-2020'
-	group by a.name
-	order by count(albums_id) desc;
+	where a.release_date between date '01-01-2019' and date '31-12-2020';
 
 -- 3.Средняя продолжительность треков по каждому альбому.
 select a.name, avg(duration) avg_duration from tracks t 
@@ -66,6 +81,7 @@ select distinct name from compilations c
 								and ar.name like 'artist\_A')));
 							
 ---- Задание 4
+							
 -- 1.Названия альбомов, в которых присутствуют исполнители более чем одного жанра.
 select distinct name from albums
 	where id in
