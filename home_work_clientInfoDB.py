@@ -144,7 +144,7 @@ find_customer(conn, last_name='Shisha')
 del_numder(conn, '+1 225 567 54 32')
 
 del_customer(conn, 2)
-find_customer(conn, number='+8 123 44 30')
+find_customer(conn, last_name='Shisha')
 
 find_customer(conn, number='+8 123 44 30')
 
