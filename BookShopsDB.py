@@ -32,7 +32,7 @@ input = 'O\u2019Reilly'
 # название книги | название магазина, в котором была куплена эта книга | стоимость покупки | дата покупки
 subq = session.query(Publisher.id).filter(Publisher.name == input).subquery()
 subq2 = session.query(Book.id, Book.title).filter(subq.c.id == Book.id_publisher).subquery()
-subq3 = session.query(Stock).filter(Stock.id_book == subq2.c.id).subquery()
+subq3 = session.query(Stock.id_shop).filter(Stock.id_book == subq2.c.id).subquery()
 subq4 = session.query(Shop.name).filter(Shop.id == subq3.c.id_shop).subquery()
 ans = session.query(subq2.c.title, subq4.c.name, Sale.price, Sale.date_sale).distinct()
 
